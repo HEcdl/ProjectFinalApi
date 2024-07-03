@@ -14,7 +14,11 @@ const UserRow: React.FC<Props> = ({ user, onDelete, index }) => {
         {user.name.first} {user.name.last}
       </td>
       <td>{user.location.country}</td>
+       
       <td>{user.email}</td>
+     <td>
+        <img src={user.picture.large} width="50" height="50" />
+      </td>
       <td>
         <button onClick={() => onDelete(index)}>Eliminar</button>
       </td>
