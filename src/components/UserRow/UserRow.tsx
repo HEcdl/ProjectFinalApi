@@ -1,5 +1,7 @@
 import React from 'react';
-import User from './User';
+import User from '../User';
+import style from "./UserRow.module.css";
+
 
 interface Props {
   user: User;
@@ -9,7 +11,7 @@ interface Props {
 
 const UserRow: React.FC<Props> = ({ user, onDelete, index }) => {
   return (
-    <tr>
+    <tr className={style.datos}>
       <td>
         {user.name.first} {user.name.last}
       </td>
@@ -17,10 +19,10 @@ const UserRow: React.FC<Props> = ({ user, onDelete, index }) => {
        
       <td>{user.email}</td>
      <td>
-        <img src={user.picture.large} width="50" height="50" />
+        <img src={user.picture.large} width="75" height="75" />
       </td>
       <td>
-        <button onClick={() => onDelete(index)}>Eliminar</button>
+        <button className={style.boteliminar} onClick={() => onDelete(index)}>Eliminar</button>
       </td>
     </tr>
   );

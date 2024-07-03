@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import UserRow from './UserRow';
-import User from './User';
+import UserRow from '../UserRow/UserRow';
+import User from '../User';
+import style from "./UserList.module.css";
+
+
+
 
 const UserList: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -42,10 +46,11 @@ const UserList: React.FC = () => {
 
   return (
     <>
-      <div>
+      <div >
         <h3>Buscar</h3>
         <div className="search-bar">
           <input
+          className={style.buscador}
             type="text"
             placeholder="Search by name, country, or email..."
             value={searchTerm}
@@ -56,9 +61,9 @@ const UserList: React.FC = () => {
           />
         </div>
       </div>
-      <table className="table">
+      <table className={style.table}>
         <thead>
-          <tr>
+          <tr className={style.encabezado}>
             <th>Nombre</th>
             <th>Pais</th>
             <th>Correo</th>
@@ -66,7 +71,7 @@ const UserList: React.FC = () => {
             <th>Eliminar</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className={style.info}>
           {filteredUsers.map((user, index) => (
             <UserRow key={index} user={user} onDelete={handleDelete} index={index} />
           ))}

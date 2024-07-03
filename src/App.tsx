@@ -1,6 +1,6 @@
 import React from 'react';
 import "./App.css";
-import UserList from './components/UserList';
+import UserList from './components/userlist/UserList';
 
 const App: React.FC = () => {
   return (
