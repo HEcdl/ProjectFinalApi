@@ -10,6 +10,7 @@ interface Props {
 }
 
 const UserRow: React.FC<Props> = ({ user, onDelete, index }) => {
+
   return (
     <tr className={style.datos}>
       <td>

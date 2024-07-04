@@ -3,18 +3,16 @@ import UserRow from '../UserRow/UserRow';
 import User from '../User';
 import style from "./UserList.module.css";
 
-
-
-
 const UserList: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
+  const [indexToDelete, setIndexToDelete] = useState<number | null>(null);
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch('https://randomuser.me/api/?results=25');
+        const response = await fetch('https://randomuser.me/api/?results=15');
         const data = await response.json();
         setUsers(data.results);
         setFilteredUsers(data.results); // Initialize filtered users with the fetched users
@@ -26,8 +24,12 @@ const UserList: React.FC = () => {
   }, []);
 
   const handleDelete = (index: number) => {
-    setUsers(users.filter((_, i) => i !== index));
-    setFilteredUsers(filteredUsers.filter((_, i) => i !== index));
+    setIndexToDelete(index);
+    const confirmDelete = window.confirm(`¿Estás seguro de eliminar al usuario ${filteredUsers[index].name.first} ${filteredUsers[index].name.last}?`);
+    if (confirmDelete) {
+      setUsers(users.filter((_, i) => i !== index));
+      setFilteredUsers(filteredUsers.filter((_, i) => i !== index));
+    }
   };
 
   const handleSearch = (searchTerm: string) => {
@@ -73,7 +75,7 @@ const UserList: React.FC = () => {
         </thead>
         <tbody className={style.info}>
           {filteredUsers.map((user, index) => (
-            <UserRow key={index} user={user} onDelete={handleDelete} index={index} />
+            <UserRow key={index} user={user} onDelete={() => handleDelete(index)} index={index} />
           ))}
         </tbody>
       </table>
