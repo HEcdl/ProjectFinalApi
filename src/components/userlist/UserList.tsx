@@ -1,3 +1,4 @@
+// File Path: src\components\userlist\UserList.tsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Modal from 'react-modal';
@@ -5,6 +6,7 @@ import UserRow from '../UserRow/UserRow';
 import EditUserForm from '../EditForm/EditUserForm';
 import User from '../User';
 import style from "./UserList.module.css";
+import SearchTwoToneIcon from '@mui/icons-material/SearchTwoTone';
 
 Modal.setAppElement('#root'); // Set the root element for accessibility
 
@@ -15,6 +17,8 @@ const UserList: React.FC = () => {
   const [indexToDelete, setIndexToDelete] = useState<number | null>(null);
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCompactView, setIsCompactView] = useState(true); // Estado para controlar la vista de la tabla
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false); // Estado para controlar el modal de confirmación
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -39,17 +43,6 @@ const UserList: React.FC = () => {
     }
   }, []);
 
-  const handleDelete = (index: number) => {
-    setIndexToDelete(index);
-    const confirmDelete = window.confirm(`¿Estás seguro de eliminar al usuario ${filteredUsers[index].name.first} ${filteredUsers[index].name.last}?`);
-    if (confirmDelete) {
-      const newUsers = users.filter((_, i) => i !== index);
-      setUsers(newUsers);
-      setFilteredUsers(newUsers);
-      localStorage.setItem('users', JSON.stringify(newUsers)); // Update local storage
-    }
-  };
-
   const handleSearch = (searchTerm: string) => {
     const filteredUsers = users.filter((user) => {
       const name = `${user.name.first} ${user.name.last}`;
@@ -65,7 +58,9 @@ const UserList: React.FC = () => {
   };
 
   const handleEdit = (index: number) => {
-    setEditingIndex(index);
+    const userToEdit = filteredUsers[index];
+    const actualIndex = users.findIndex(user => user.email === userToEdit.email);
+    setEditingIndex(actualIndex);
     setIsModalOpen(true);
   };
 
@@ -83,13 +78,33 @@ const UserList: React.FC = () => {
     setIsModalOpen(false);
   };
 
+  const openConfirmModal = (index: number) => {
+    setIndexToDelete(index);
+    setIsConfirmModalOpen(true);
+  };
+
+  const handleDelete = () => {
+    if (indexToDelete !== null) {
+      const newUsers = users.filter((_, i) => i !== indexToDelete);
+      setUsers(newUsers);
+      setFilteredUsers(newUsers);
+      localStorage.setItem('users', JSON.stringify(newUsers)); // Update local storage
+      setIndexToDelete(null);
+      setIsConfirmModalOpen(false);
+    }
+  };
+
+  const toggleView = () => {
+    setIsCompactView(!isCompactView);
+  };
+
   return (
     <>
-      <div >
-        <h3>Buscar</h3>
+      <div className={style.contbuscar}>
+        <SearchTwoToneIcon className={style.iconbuscar}/>
         <div className="search-bar">
           <input
-          className={style.buscador}
+            className={style.buscador}
             type="text"
             placeholder="Search by name, country, or email..."
             value={searchTerm}
@@ -100,24 +115,43 @@ const UserList: React.FC = () => {
           />
         </div>
       </div>
+      <label>
+        <input
+          type="checkbox"
+          checked={!isCompactView}
+          onChange={toggleView}
+        />
+        {isCompactView ? 'Show Expanded View' : 'Show Compact View'}
+      </label>
       <table className={style.table}>
         <thead>
           <tr className={style.encabezado}>
             <th>Nombre</th>
-            <th>Pais</th>
-            <th>Correo</th>
+            {isCompactView ? null : (
+              <>
+                <th>Pais</th>
+                <th>Correo</th>
+              </>
+            )}
             <th>Perfil</th>
-            <th>Eliminar</th>
-            <th>Editar</th>
+            {isCompactView ? null : (
+              <>
+                <th>Eliminar</th>
+                <th>Editar</th>
+              </>
+            )}
           </tr>
         </thead>
         <tbody className={style.info}>
           {filteredUsers.map((user, index) => (
-            <UserRow key={index}
-             user={user}
-              onDelete={() => handleDelete(index)} 
-              onEdit={()=> handleEdit(index)}
-               index={index} />
+            <UserRow
+              key={index}
+              user={user}
+              onDelete={() => openConfirmModal(index)}
+              onEdit={() => handleEdit(index)}
+              index={index}
+              isCompactView={isCompactView}
+            />
           ))}
         </tbody>
       </table>
@@ -133,6 +167,19 @@ const UserList: React.FC = () => {
             onSave={(user) => handleSave(user)}
             onCancel={handleCancel}
           />
+        </Modal>
+      )}
+      {isConfirmModalOpen && (
+        <Modal
+          isOpen={isConfirmModalOpen}
+          onRequestClose={() => setIsConfirmModalOpen(false)}
+          contentLabel="Confirm Delete"
+          className={style.ventanamodal}
+        >
+          <h2>Confirm Delete</h2>
+          <p>Are you sure you want to delete this user?</p>
+          <button onClick={handleDelete}>Yes</button>
+          <button onClick={() => setIsConfirmModalOpen(false)}>No</button>
         </Modal>
       )}
     </>

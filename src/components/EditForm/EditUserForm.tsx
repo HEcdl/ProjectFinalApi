@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import User from "../User";
-
+import style from "./EditUserForm.module.css";
 interface EditUserFormProps {
   user: User;
   onSave: (user: User) => void;
@@ -26,11 +26,13 @@ const EditUserForm: React.FC<EditUserFormProps> = ({ user, onSave, onCancel }) =
       <label>
         Name:
         <input
+        className={style.inputs}
           type="text"
           value={name.first}
           onChange={(e) => setName({...name, first: e.target.value })}
         />
         <input
+         className={style.inputs}
           type="text"
           value={name.last}
           onChange={(e) => setName({...name, last: e.target.value })}
@@ -40,6 +42,7 @@ const EditUserForm: React.FC<EditUserFormProps> = ({ user, onSave, onCancel }) =
       <label>
         Email:
         <input
+        className={style.inputs}
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -49,14 +52,17 @@ const EditUserForm: React.FC<EditUserFormProps> = ({ user, onSave, onCancel }) =
       <label>
         Country:
         <input
+        className={style.inputs}
           type="text"
           value={country}
           onChange={(e) => setCountry(e.target.value)}
         />
       </label>
       <br />
-      <button onClick={handleSave}>Save</button>
-      <button onClick={handleCancel}>Cancel</button>
+    
+        <button className={style.botonsave} onClick={handleSave}>Save</button>
+      <button className={style.botoncancel} onClick={handleCancel}>Cancel</button>
+      
     </form>
   );
 };

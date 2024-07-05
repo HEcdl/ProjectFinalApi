@@ -9,6 +9,15 @@
     background-color: #a22;
 
 }
+.boteditar{
+    background-color: #069;
+}
+.boteditar:hover{
+    background-color: #2a2f;
+}
+.boteditar:active{
+    background-color: #2a25;
+}
 .datos{
     border: #ddd 1px solid !important;
 }
