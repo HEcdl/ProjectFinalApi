@@ -1,15 +1,17 @@
 import React from 'react';
 import User from '../User';
-import style from "./UserRow.module.css";
 
+import style from "./UserRow.module.css";
+import DeleteForeverTwoToneIcon from '@mui/icons-material/DeleteForeverTwoTone';
 
 interface Props {
   user: User;
   onDelete: (index: number) => void;
+  onEdit: (index: number) => void;
   index: number;
 }
 
-const UserRow: React.FC<Props> = ({ user, onDelete, index }) => {
+const UserRow: React.FC<Props> = ({ user, onDelete, onEdit, index }) => {
 
   return (
     <tr className={style.datos}>
@@ -23,8 +25,13 @@ const UserRow: React.FC<Props> = ({ user, onDelete, index }) => {
         <img src={user.picture.large} width="75" height="75" />
       </td>
       <td>
-        <button className={style.boteliminar} onClick={() => onDelete(index)}>Eliminar</button>
+        <button className={style.boteliminar} onClick={() => onDelete(index)}><DeleteForeverTwoToneIcon/></button>
+        
       </td>
+      <td>
+        <button className={style.boteditar} onClick={() => onEdit(index)}>Editar</button>
+      </td>
+
     </tr>
   );
 };

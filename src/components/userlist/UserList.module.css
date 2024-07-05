@@ -1,7 +1,7 @@
 .buscador{
     margin: 0;
     margin-bottom: 20px;
-    padding: 15px 75px;
+    padding: 10px 75px;
     border-color: #06ad;
     font-size: large;
 }
@@ -14,11 +14,24 @@
     padding: 55px;
     border-radius: 5px;
     margin:auto;
-    box-shadow: 0px 0px 5px 7px #222;
+    box-shadow: 0px 30px 30px 10px #222;
 }
 
 .encabezado{
     background-color: #06ab;
     width: 100%;
     margin: 20px;
+}
+.ventanamodal{
+    display: flex;
+    justify-content: center;
+    width: 50%;
+    margin: auto;
+    margin-top: 250px;
+    background-color: #06ab;
+    padding: 10px 20px;
+    border-radius: 7px;
+}
+.ventanamodal:hover{
+    background-color: #06a;
 }

@@ -2,6 +2,9 @@
     margin: 50px !important;
     background-color: red;
 }
+.boteliminar{
+    background-color: #069;
+}
 .boteliminar:hover{
     background-color: #a22;
 
