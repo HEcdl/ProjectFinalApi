@@ -19,6 +19,10 @@ const UserList: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCompactView, setIsCompactView] = useState(true); // Estado para controlar la vista de la tabla
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false); // Estado para controlar el modal de confirmación
+  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false); // Estado para controlar el modal de filtros
+  const [filterName, setFilterName] = useState('');
+  const [filterCountry, setFilterCountry] = useState('');
+  const [filterEmail, setFilterEmail] = useState('');
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -93,7 +97,20 @@ const UserList: React.FC = () => {
       setIsConfirmModalOpen(false);
     }
   };
-
+const handleFilter = () => {
+    const filteredUsers = users.filter((user) => {
+      const name = `${user.name.first} ${user.name.last}`;
+      const country = user.location.country;
+      const email = user.email;
+      return (
+        name.toLowerCase().includes(filterName.toLowerCase()) &&
+        country.toLowerCase().includes(filterCountry.toLowerCase()) &&
+        email.toLowerCase().includes(filterEmail.toLowerCase())
+      );
+    });
+    setFilteredUsers(filteredUsers);
+    setIsFilterModalOpen(false); // Cerrar el modal después de aplicar los filtros
+  };
   const toggleView = () => {
     setIsCompactView(!isCompactView);
   };
@@ -123,6 +140,44 @@ const UserList: React.FC = () => {
         />
         {isCompactView ? 'Show Expanded View' : 'Show Compact View'}
       </label>
+      <button onClick={() => setIsFilterModalOpen(true)}>Open Filter Modal</button>
+      <Modal
+        isOpen={isFilterModalOpen}
+        onRequestClose={() => setIsFilterModalOpen(false)}
+        contentLabel="Filter Users"
+      >
+        <h2>Filter Users</h2>
+        <form onSubmit={(e) => { e.preventDefault(); handleFilter(); }}>
+          <div>
+            <label>Name:</label>
+            <input
+              type="text"
+              value={filterName}
+              onChange={(e) => setFilterName(e.target.value)}
+            />
+          </div>
+          <div>
+            <label>Country:</label>
+            <input
+              type="text"
+              value={filterCountry}
+              onChange={(e) => setFilterCountry(e.target.value)}
+            />
+          </div>
+          <div>
+            <label>Email:</label>
+            <input
+              type="text"
+              value={filterEmail}
+              onChange={(e) => setFilterEmail(e.target.value)}
+            />
+          </div>
+          <button type="submit">Apply Filters</button>
+          <button type="button" onClick={() => setIsFilterModalOpen(false)}>Close</button>
+        </form>
+      </Modal>
+
+
       <table className={style.table}>
         <thead>
           <tr className={style.encabezado}>
