@@ -117,7 +117,14 @@ const handleFilter = () => {
 
   return (
     <>
+    <div className={style.main}>
+      
+    <div className={style.encabeconten}>
+      <h3>Registro</h3>
+   <div className={style.contencabe}>
+     {/* Apartado de Busqueda */}
       <div className={style.contbuscar}>
+        
         <SearchTwoToneIcon className={style.iconbuscar}/>
         <div className="search-bar">
           <input
@@ -132,16 +139,28 @@ const handleFilter = () => {
           />
         </div>
       </div>
+      {/* Checkbox para Mostrar Mas detalles */}
+
       <label>
         <input
           type="checkbox"
           checked={!isCompactView}
           onChange={toggleView}
         />
-        {isCompactView ? 'Show Expanded View' : 'Show Compact View'}
+        {isCompactView ? 'Mostar Detalles' : 'Mostrar Menos'}
       </label>
-      <button onClick={() => setIsFilterModalOpen(true)}>Open Filter Modal</button>
+
+
+      {/* Boton para Filtrar datos */}
+      <button className={style.button} onClick={() => setIsFilterModalOpen(true)}>Filtrar</button>
+
+   </div>
+    </div>
+
+      
+      {/* Ventana modal para filtrar Datos */}
       <Modal
+      className={style.ventanamodal}
         isOpen={isFilterModalOpen}
         onRequestClose={() => setIsFilterModalOpen(false)}
         contentLabel="Filter Users"
@@ -151,6 +170,7 @@ const handleFilter = () => {
           <div>
             <label>Name:</label>
             <input
+            className={style.inputs}
               type="text"
               value={filterName}
               onChange={(e) => setFilterName(e.target.value)}
@@ -159,6 +179,7 @@ const handleFilter = () => {
           <div>
             <label>Country:</label>
             <input
+            className={style.inputs}
               type="text"
               value={filterCountry}
               onChange={(e) => setFilterCountry(e.target.value)}
@@ -167,16 +188,22 @@ const handleFilter = () => {
           <div>
             <label>Email:</label>
             <input
+            className={style.inputs}
               type="text"
               value={filterEmail}
               onChange={(e) => setFilterEmail(e.target.value)}
             />
           </div>
-          <button type="submit">Apply Filters</button>
-          <button type="button" onClick={() => setIsFilterModalOpen(false)}>Close</button>
+         
+<button type="submit" className={style.button}>Aplicar Filtro</button>
+<button type="button" className={`${style.button} ${style.buttonclose}`} onClick={() => setIsFilterModalOpen(false)}>Cerrar</button>
         </form>
       </Modal>
 
+
+
+     <div className="tabladatos">
+         {/* Tabla con registro */}
 
       <table className={style.table}>
         <thead>
@@ -210,6 +237,8 @@ const handleFilter = () => {
           ))}
         </tbody>
       </table>
+     </div>
+      {/* Boton de editar */}
       {editingIndex !== null && (
         <Modal
           isOpen={isModalOpen}
@@ -224,6 +253,7 @@ const handleFilter = () => {
           />
         </Modal>
       )}
+      {/* Boton de eliminar */}
       {isConfirmModalOpen && (
         <Modal
           isOpen={isConfirmModalOpen}
@@ -231,12 +261,13 @@ const handleFilter = () => {
           contentLabel="Confirm Delete"
           className={style.ventanamodal}
         >
-          <h2>Confirm Delete</h2>
-          <p>Are you sure you want to delete this user?</p>
-          <button onClick={handleDelete}>Yes</button>
-          <button onClick={() => setIsConfirmModalOpen(false)}>No</button>
+          <h2>Confirmar</h2>
+          <p>Estas seguro de que quieres borrar este Usario?</p>
+          <button className={style.button} onClick={handleDelete}>Si</button>
+          <button className={`${style.button} ${style.buttonclose}`} onClick={() => setIsConfirmModalOpen(false)}>No</button>
         </Modal>
       )}
+    </div>
     </>
   );
 };

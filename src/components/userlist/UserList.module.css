@@ -1,23 +1,47 @@
+.main{
+    margin: auto;
+  
+}
+
+.encabeconten{
+    width: 100%;
+    position: fixed;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        
+        z-index: 1000;
+        /* Asegúrate de que esté por encima de otros elementos */
+}
+.encabeconten h3 {
+    position: absolute;
+    left: 0;
+    padding: 0;
+    font-size: x-large;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 700;
+}
+.contencabe{
+    justify-content: baseline;
+    margin: auto;
+    margin: 25px;
+}
+
 .contbuscar{
     display: flex;
     justify-content: center;
     align-content: baseline;
-    margin: 5px;
+    margin: auto;
     font-weight: 900;
 }
-.contbuscar h3{
-    padding: 10px;
-    font-size:x-large;
-}
+
 .iconbuscar{
     padding: 10px;
     margin: 0;
     font-size: large;
-
 }
 .buscador{
     margin: auto;
-    
     margin-bottom: 20px;
     padding: 7px 75px;
     border-color: #06ad;
@@ -25,14 +49,15 @@
     
 }
 .buscador:hover{
-    background-color: #aaa;
+    background-color: #fffa;
     color: #000;
 }
 .table {
     background-color: #06a2;
-    padding: 55px;
+    padding: 100px !important;
     border-radius: 5px;
     margin:auto;
+    margin-top: 0px;
     margin-bottom: 100px;
     box-shadow: 0px 0px 15px 0.5px #222;
 }
@@ -43,15 +68,54 @@
     margin: 20px;
 }
 .ventanamodal{
-    display: flex;
-    justify-content: center;
+
     width: 50%;
     margin: auto;
     margin-top: 250px;
-    background-color: #06ab;
-    padding: 10px 20px;
+    background-color: #fff;
+    padding: 10px;
     border-radius: 7px;
 }
-.ventanamodal:hover{
+
+h2{
+    color: #fff;
+    text-align: center;
     background-color: #06a;
+}
+label{
+    font-weight: 700;
+}
+.inputs {
+    width: 250px;
+    height: auto;
+    background-color: #f0f0f0;
+    padding: 5px;
+    margin: 10px;
+    color: #000;
+}
+
+/* src/components/userlist/UserList.module.css */
+.button {
+    background-color: transparent;
+    /* Verde */
+    border: 2px solid #06a;
+    color: #000;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px 50px;
+    cursor: pointer;
+}
+.button:hover{
+    background-color:#292;
+}
+
+.buttonclose {
+    background-color: transparent;
+    /* Rojo */
+}
+.buttonclose:hover{
+    background-color: #a22;
 }

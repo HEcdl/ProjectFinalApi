@@ -5,7 +5,11 @@
   max-width: 1280px;
   margin: auto;
   text-align: center;
+  justify-items: center;
   overflow-x: hidden;
+}
+h1{
+  margin-top: 200px;
 }
 td{
   margin: auto;
@@ -14,10 +18,10 @@ td{
 td>img{
   padding: 25px;
 }
-button{
+/* button{
   margin: 20px;
   margin-right: 0;
-}
+} */
 /* 
 .logo {
   height: 6em;
